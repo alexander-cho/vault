@@ -1,12 +1,13 @@
-'''
+"""
 Account base class
-'''
+"""
 
 from datetime import datetime
 
-class Account():
 
-    def __init__(self, name, ssn, username, password, total_balance = None) -> None:
+class Account:
+
+    def __init__(self, name, ssn, username, password, total_balance=None) -> None:
         self.name = name
         self.ssn = ssn
         self.username = username
@@ -33,8 +34,9 @@ class Account():
             self.total_balance -= amount
             print(f'You have withdrawn ${amount}')
 
-    def get_total_balance(self) -> int:
-        return self.total_balance
+    def get_total_balance(self) -> None:
+        print(self.total_balance)
+        # return self.total_balance
     
     def __str__(self) -> str:
         return f'This is the account of {self.name}'
