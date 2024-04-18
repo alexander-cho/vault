@@ -37,6 +37,9 @@ class Account:
     def get_total_balance(self) -> None:
         print(self.total_balance)
         # return self.total_balance
-    
+
+    def date_account_created(self) -> datetime:
+        return self.date_created
+
     def __str__(self) -> str:
         return f'This is the account of {self.name}'
