@@ -5,21 +5,32 @@ class Portfolio:
         self.holdings = {}
 
     def buy(self, ticker, num_shares):
-        if ticker in self.holdings.keys():
-            self.holdings[ticker] += num_shares
+        # check for proper parameter types
+        if isinstance(ticker, str) and isinstance(num_shares, int):
+            # check if stock is already owned
+            if ticker in self.holdings.keys():
+                self.holdings[ticker] += num_shares
+            else:
+                self.holdings[ticker] = num_shares
         else:
-            self.holdings[ticker] = num_shares
+            raise TypeError('Ticker must be a string, number of shares must be an integer')
 
         print(f'You bought {num_shares} shares of {ticker}')
 
     def sell(self, ticker, num_shares):
-        if ticker in self.holdings.keys():
-            if num_shares > self.holdings[ticker]:
-                print("You cannot sell more than you already have.")
+        # check for proper parameter types
+        if isinstance(ticker, str) and isinstance(num_shares, int):
+            # check is stock is already owned
+            if ticker in self.holdings.keys():
+                # check if investor is trying to sell more than they own
+                if num_shares > self.holdings[ticker]:
+                    print("You cannot sell more than you already have.")
+                else:
+                    self.holdings[ticker] -= num_shares
             else:
-                self.holdings[ticker] -= num_shares
+                print("You don't own that stock.")
         else:
-            print("You don't own that stock.")
+            raise TypeError('Ticker must be a string, number of shares must be an integer')
 
         print(f'You sold {num_shares} shares of {ticker}')
 
@@ -33,10 +44,15 @@ class Portfolio:
 
 if __name__ == '__main__':
     a = Portfolio('alex')
-    a.buy('SOFI', 100)
-    a.buy('AFRM', 50)
-    a.buy('UPST', 40)
-    a.buy('TSLA', 10)
-    a.buy('HOOD', 75)
-    a.buy('LC', 100)
+
+    try:
+        a.buy('SOFI', 100)
+        a.buy('AFRM', 50)
+        a.buy('UPST', 40)
+        a.buy('TSLA', 10)
+        a.buy('HOOD', 75)
+        a.buy(3, 'LC')
+    except Exception as e:
+        print(e)
+
     a.display_holdings()
